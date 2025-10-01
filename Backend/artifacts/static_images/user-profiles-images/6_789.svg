@@ -1,0 +1,13 @@
+<svg width="118" height="118" viewBox="0 0 118 118" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle id="Bavkground" cx="59" cy="59" r="56.5" fill="url(#paint0_linear_6_789)" stroke="url(#paint1_linear_6_789)" stroke-width="5"/>
+<defs>
+<linearGradient id="paint0_linear_6_789" x1="25.5" y1="19.5" x2="94" y2="107" gradientUnits="userSpaceOnUse">
+<stop stop-color="#610281"/>
+<stop offset="1" stop-color="#FF80F2"/>
+</linearGradient>
+<linearGradient id="paint1_linear_6_789" x1="59" y1="0" x2="59" y2="118" gradientUnits="userSpaceOnUse">
+<stop stop-color="#AE80FF"/>
+<stop offset="1" stop-color="#610281"/>
+</linearGradient>
+</defs>
+</svg>

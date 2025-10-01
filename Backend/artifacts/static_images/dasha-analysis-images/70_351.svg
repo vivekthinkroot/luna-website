@@ -1,0 +1,12 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Moon Icon">
+<path id="Vector" d="M12.0973 11.903C10.8268 10.632 9.96157 9.01282 9.61092 7.25019C9.26027 5.48756 9.43996 3.66054 10.1273 2C8.16761 2.38579 6.36755 3.34738 4.95733 4.76177C1.01423 8.705 1.01423 15.099 4.95733 19.0422C8.90143 22.9864 15.2942 22.9854 19.2383 19.0422C20.6523 17.6321 21.6138 15.8324 22 13.8731C20.3395 14.5603 18.5126 14.7399 16.75 14.3893C14.9875 14.0386 13.3684 13.1734 12.0973 11.903Z" fill="url(#paint0_linear_70_351)"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_70_351" x1="12.0971" y1="2" x2="22.0004" y2="15.9997" gradientUnits="userSpaceOnUse">
+<stop stop-color="#6DCDEC"/>
+<stop offset="0.481347" stop-color="#7385F8"/>
+<stop offset="1" stop-color="#F3966F"/>
+</linearGradient>
+</defs>
+</svg>

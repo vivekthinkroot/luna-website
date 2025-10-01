@@ -1,0 +1,62 @@
+﻿python : C:\Users\vivek\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py:1097: 
+InsecureRequestWarning: Unverified HTTPS request is being made to host 'astroapi-3.divineapi.com'. Adding certificate 
+verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+At C:\Users\vivek\AppData\Local\Temp\ps-script-473d0a6f-0c05-4367-a924-74f958cbd67a.ps1:81 char:81
++ ... t\luna-website-main\Backend; python test_gemstone_api.py 2>&1 | Out-F ...
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (C:\Users\vivek\...ml#tls-warnings:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  warnings.warn(
+================================================================================
+GEMSTONE API TEST
+================================================================================
+
+[INFO] Using API Key: 46ca8e3fa8...
+[INFO] Using Auth Token: eyJ0eXAiOi...
+
+[TEST 1] Creating GemstoneRequest with dummy data...
+[OK] GemstoneRequest created successfully!
+     Name: Vivek Tripathi
+     DOB: 3/1/2003
+     Time: 9:45:0
+     Place: Kanpur, India
+     Coordinates: 26.4499, 80.3319
+
+[TEST 2] Calling Divine API gemstone endpoint...
+[OK] API call successful!
+     Response success: 1
+
+[TEST 3] Checking response data...
+[OK] Response has data!
+
+--- Lucky Stone ---
+[OK] Lucky stone data found
+     Primary: Diamond, Blue Sapphire
+     Secondary: White Sapphire, Phenakite, White Topaz
+     Day to wear: Friday
+     Finger to wear: Ring Finger
+     Mantra: αÑÉ αñªαÑìαñ░αñ╛αñé αñªαÑìαñ░αÑÇαñé αñªαÑìαñ░αÑîαñé αñ╕αñâ αñ╢αÑüαñòαÑìαñ░αñ╛αñ» αñ¿αñ«αñâ αÑÑ
+
+--- Life Stone ---
+[OK] Life stone data found
+     Primary: Blue Sapphire
+     Secondary: Amethyst, Blue Spinel
+     Day to wear: Saturday
+     Finger to wear: Middle Finger
+     Mantra: αÑÉ αñ¬αÑìαñ░αñ╛αñé αñ¬αÑìαñ░αÑÇαñé αñ¬αÑìαñ░αÑîαñé αñ╕αñâ αñ╢αñ¿αÑêαñ╢αÑìαñÜαñ░αñ╛αñ» αñ¿αñ«αñâαÑÑ
+
+--- Dasha Stone ---
+[INFO] No dasha_stone data (value: None)
+
+[TEST 4] Testing format for display (as used in AstroInsights)...
+
+[OK] Lucky Stone formatted:
+     Primary Gemstone: Diamond, Blue Sapphire | Day to Wear: Friday | Finger to Wear: Ring Finger | Mantra: αÑÉ αñªαÑìαñ░αñ╛αñé αñªαÑìαñ░αÑÇαñé αñªαÑìαñ░αÑîαñé αñ╕αñâ αñ╢αÑüαñòαÑìαñ░αñ╛αñ» αñ¿αñ«αñâ αÑÑ
+
+[OK] Life Stone formatted:
+     Primary Gemstone: Blue Sapphire | Day to Wear: Saturday | Finger to Wear: Middle Finger | Mantra: αÑÉ αñ¬αÑìαñ░αñ╛αñé αñ¬αÑìαñ░αÑÇαñé αñ¬αÑìαñ░αÑîαñé αñ╕αñâ αñ╢αñ¿αÑêαñ╢αÑìαñÜαñ░αñ╛αñ» αñ¿αñ«αñâαÑÑ
+
+================================================================================
+TEST COMPLETE
+================================================================================

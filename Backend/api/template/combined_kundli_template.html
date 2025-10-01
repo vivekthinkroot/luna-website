@@ -1,0 +1,496 @@
+{% macro render_lagna_svg(chart_data, house_labels, house_coords, border_color, chart_type) %}
+<svg height="360" width="360" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="0" width="360" height="360" fill="rgba(255,255,255,0.05)" stroke="{{ border_color }}" stroke-width="4" rx="8"></rect>
+    <line x1="0" y1="0" x2="360" y2="360" stroke="{{ border_color }}" stroke-width="2" opacity="0.8"></line>
+    <line x1="0" y1="360" x2="360" y2="0" stroke="{{ border_color }}" stroke-width="2" opacity="0.8"></line>
+    <line x1="0" y1="180" x2="180" y2="0" stroke="{{ border_color }}" stroke-width="2" opacity="0.8"></line>
+    <line x1="180" y1="0" x2="360" y2="180" stroke="{{ border_color }}" stroke-width="2" opacity="0.8"></line>
+    <line x1="360" y1="180" x2="180" y2="360" stroke="{{ border_color }}" stroke-width="2" opacity="0.8"></line>
+    <line x1="0" y1="180" x2="180" y2="360" stroke="{{ border_color }}" stroke-width="2" opacity="0.8"></line>
+
+    {# House labels and planets with improved positioning #}
+    {% for i in range(12) %}
+        {% set house = house_labels[i] %}
+        {% set coord = house_coords[i] %}
+        
+        {# House number in top-left corner of each section #}
+        <text x="{{ coord[0] - 35 }}" y="{{ coord[1] - 30 }}" text-anchor="middle" 
+              style="fill:#ffd700; font-size:11px; font-weight:bold;" font-family="Arial, sans-serif">H{{ house }}</text>
+        
+        {# Draw sign number in top-right corner, separate from house number #}
+        {% if chart_data[house] is defined and chart_data[house].sign_no is defined %}
+            <text x="{{ coord[0] + 35 }}" y="{{ coord[1] - 30 }}" text-anchor="middle" 
+                  style="fill:#b8c5ff; font-size:10px; font-weight:bold;" font-family="Arial, sans-serif">S{{ chart_data[house].sign_no }}</text>
+        {% endif %}
+        
+        {# Stack planet symbols with better spacing and positioning #}
+        {% if chart_data[house] is defined and chart_data[house].planet %}
+            {% set planet_count = chart_data[house].planet|length %}
+            {% if planet_count == 1 %}
+                {# Single planet - center it lower #}
+                <text x="{{ coord[0] }}" y="{{ coord[1] + 10 }}" text-anchor="middle" 
+                      style="fill:#ffffff; font-size:12px; font-weight:bold;" font-family="Arial, sans-serif">{{ chart_data[house].planet[0].symbol }}</text>
+            {% elif planet_count == 2 %}
+                {# Two planets - side by side with more space #}
+                <text x="{{ coord[0] - 15 }}" y="{{ coord[1] + 10 }}" text-anchor="middle" 
+                      style="fill:#ffffff; font-size:11px; font-weight:bold;" font-family="Arial, sans-serif">{{ chart_data[house].planet[0].symbol }}</text>
+                <text x="{{ coord[0] + 15 }}" y="{{ coord[1] + 10 }}" text-anchor="middle" 
+                      style="fill:#ffffff; font-size:11px; font-weight:bold;" font-family="Arial, sans-serif">{{ chart_data[house].planet[1].symbol }}</text>
+            {% elif planet_count == 3 %}
+                {# Three planets - better triangle formation #}
+                <text x="{{ coord[0] - 18 }}" y="{{ coord[1] + 5 }}" text-anchor="middle" 
+                      style="fill:#ffffff; font-size:10px; font-weight:bold;" font-family="Arial, sans-serif">{{ chart_data[house].planet[0].symbol }}</text>
+                <text x="{{ coord[0] + 18 }}" y="{{ coord[1] + 5 }}" text-anchor="middle" 
+                      style="fill:#ffffff; font-size:10px; font-weight:bold;" font-family="Arial, sans-serif">{{ chart_data[house].planet[1].symbol }}</text>
+                <text x="{{ coord[0] }}" y="{{ coord[1] + 20 }}" text-anchor="middle" 
+                      style="fill:#ffffff; font-size:10px; font-weight:bold;" font-family="Arial, sans-serif">{{ chart_data[house].planet[2].symbol }}</text>
+            {% elif planet_count == 4 %}
+                {# Four planets - square formation with better spacing #}
+                <text x="{{ coord[0] - 15 }}" y="{{ coord[1] }}" text-anchor="middle" 
+                      style="fill:#ffffff; font-size:9px; font-weight:bold;" font-family="Arial, sans-serif">{{ chart_data[house].planet[0].symbol }}</text>
+                <text x="{{ coord[0] + 15 }}" y="{{ coord[1] }}" text-anchor="middle" 
+                      style="fill:#ffffff; font-size:9px; font-weight:bold;" font-family="Arial, sans-serif">{{ chart_data[house].planet[1].symbol }}</text>
+                <text x="{{ coord[0] - 15 }}" y="{{ coord[1] + 18 }}" text-anchor="middle" 
+                      style="fill:#ffffff; font-size:9px; font-weight:bold;" font-family="Arial, sans-serif">{{ chart_data[house].planet[2].symbol }}</text>
+                <text x="{{ coord[0] + 15 }}" y="{{ coord[1] + 18 }}" text-anchor="middle" 
+                      style="fill:#ffffff; font-size:9px; font-weight:bold;" font-family="Arial, sans-serif">{{ chart_data[house].planet[3].symbol }}</text>
+            {% else %}
+                {# More than 4 planets - show first 3 and indicate more with better spacing #}
+                <text x="{{ coord[0] - 18 }}" y="{{ coord[1] }}" text-anchor="middle" 
+                      style="fill:#ffffff; font-size:8px; font-weight:bold;" font-family="Arial, sans-serif">{{ chart_data[house].planet[0].symbol }}</text>
+                <text x="{{ coord[0] + 18 }}" y="{{ coord[1] }}" text-anchor="middle" 
+                      style="fill:#ffffff; font-size:8px; font-weight:bold;" font-family="Arial, sans-serif">{{ chart_data[house].planet[1].symbol }}</text>
+                <text x="{{ coord[0] - 18 }}" y="{{ coord[1] + 15 }}" text-anchor="middle" 
+                      style="fill:#ffffff; font-size:8px; font-weight:bold;" font-family="Arial, sans-serif">{{ chart_data[house].planet[2].symbol }}</text>
+                <text x="{{ coord[0] + 18 }}" y="{{ coord[1] + 15 }}" text-anchor="middle" 
+                      style="fill:#ff9f43; font-size:8px; font-weight:bold;" font-family="Arial, sans-serif">+{{ planet_count - 3 }}</text>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</svg>
+{% endmacro %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kundli Report - {{ kundli_basic_info.person_name or 'Test User' }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #230735 0%, #11001C 100%);
+            position: relative;
+            color: #f5eaff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .stars {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+        h1 {
+            color: #ffd700;
+            text-shadow: 0 2px 8px #11001C, 0 0 2px #fff;
+            font-size: 2.5em;
+            margin-top: 1.2em;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+        h2 {
+            color: #ffd700;
+            font-size: 1.5em;
+            margin-bottom: 1em;
+            text-align: center;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+            padding-bottom: 0.5em;
+        }
+        .section {
+            margin: 2em auto;
+            max-width: 900px;
+            width: 90%;
+            background: rgba(34, 7, 53, 0.85);
+            border-radius: 16px;
+            box-shadow: 0 4px 24px #11001C99;
+            padding: 2em;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+        .info {
+            background: rgba(255,255,255,0.08);
+            padding: 1.5em;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px #11001C44;
+            color: #ffd6f6;
+            line-height: 1.6;
+        }
+        .planets-table {
+            border-collapse: collapse;
+            width: 100%;
+            background: rgba(255,255,255,0.04);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 1em;
+        }
+        .planets-table th, .planets-table td {
+            border: 1px solid #ffd70044;
+            padding: 10px 8px;
+            color: #fff;
+            text-align: center;
+        }
+        .planets-table th {
+            background: rgba(255,215,0,0.15);
+            color: #ffd700;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+        .planets-table td {
+            font-size: 0.85em;
+        }
+        .planets-table tr:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        /* Chart styling with improved layout */
+        .chart-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2em;
+            margin-top: 2em;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .chart-wrapper {
+            flex: 1 1 520px;
+            min-width: 440px;
+            max-width: 600px;
+            background: rgba(255,255,255,0.07);
+            border-radius: 16px;
+            padding: 2.2em 1.5em 2.5em 1.5em;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.18);
+            box-shadow: 0 8px 32px rgba(17, 0, 28, 0.18);
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+        .chart-title {
+            color: #4ecdc4;
+            font-size: 1.4em;
+            margin-bottom: 1.5em;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .chart-svg {
+            background: rgba(255,255,255,0.10);
+            border: 2px solid #ffd70044;
+            border-radius: 12px;
+            margin: 1em auto;
+            padding: 1.5em;
+            box-shadow: 0 4px 16px #11001C44;
+            display: inline-block;
+            backdrop-filter: blur(5px);
+        }
+        
+        /* Chart legend */
+        .chart-legend {
+            margin-top: 1em;
+            font-size: 0.85em;
+            color: #b8c5ff;
+            text-align: left;
+            background: rgba(255,255,255,0.03);
+            padding: 1em;
+            border-radius: 8px;
+        }
+        .chart-legend div {
+            margin: 0.3em 0;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .section { 
+                padding: 1.2em;
+                width: 99%;
+            }
+            h1 { font-size: 2em; }
+            .chart-container {
+                flex-direction: column;
+                gap: 1.2em;
+                width: 100%;
+            }
+            .chart-wrapper {
+                min-width: 0;
+                max-width: 98vw;
+                width: 100%;
+                padding: 1.2em 0.2em 1.5em 0.2em;
+                margin: 0 auto;
+            }
+            .planets-table th, .planets-table td {
+                padding: 6px 4px;
+                font-size: 0.8em;
+            }
+        }
+        
+        .images img {
+            max-width: 180px;
+            margin: 0 10px 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px #ffd70044;
+        }
+        pre {
+            background: rgba(255,255,255,0.10);
+            padding: 1em;
+            border-radius: 8px;
+            color: #ffd6f6;
+        }
+        ul { color: #ffd6f6; }
+        strong { color: #ffd700; }
+        
+        .no-data {
+            color: #888;
+            text-align: center;
+            font-style: italic;
+            padding: 2em;
+        }
+        
+        /* Enhanced info styling */
+        .info strong {
+            display: inline-block;
+            min-width: 150px;
+            color: #ffd700;
+        }
+        .info br {
+            margin-bottom: 0.5em;
+        }
+        
+        /* Dasha analysis styling */
+        .dasha-item {
+            background: rgba(255,255,255,0.05);
+            margin-bottom: 1em;
+            padding: 1.5em;
+            border-radius: 10px;
+            border-left: 4px solid #4ecdc4;
+        }
+        
+        /* Yoga styling */
+        .yoga-item {
+            background: linear-gradient(135deg, rgba(76, 236, 196, 0.1), rgba(255, 215, 0, 0.1));
+            margin-bottom: 1em;
+            padding: 1.5em;
+            border-radius: 10px;
+            border: 1px solid rgba(76, 236, 196, 0.3);
+        }
+        
+        /* Dosha styling */
+        .dosha-item {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 69, 58, 0.1));
+            margin-bottom: 1em;
+            padding: 1.5em;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <canvas class="stars"></canvas>
+    <script>
+        // Draw white stars on the background
+        const canvas = document.querySelector('.stars');
+        function drawStars() {
+            const w = window.innerWidth, h = window.innerHeight;
+            canvas.width = w; canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0,0,w,h);
+            for(let i=0; i<120; i++) {
+                const x = Math.random()*w, y = Math.random()*h;
+                const r = Math.random()*1.2+0.5;
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, 2*Math.PI);
+                ctx.fillStyle = '#fff';
+                ctx.globalAlpha = Math.random()*0.7+0.3;
+                ctx.shadowColor = '#fff';
+                ctx.shadowBlur = 8;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+                ctx.shadowBlur = 0;
+            }
+        }
+        drawStars();
+        window.addEventListener('resize', drawStars);
+    </script>
+    
+    <h1>Kundli Report</h1>
+    
+    <div class="section info">
+        <strong>Name:</strong> {{ kundli_basic_info.person_name or 'Not Available' }}<br><br>
+        <strong>Date of Birth:</strong> {{ kundli_basic_info.date_of_birth or 'Not Available' }}<br><br>
+        <strong>Lagna:</strong> <span style="color:#a3ffea;">{{ kundli_basic_info.lagna or 'Not Available' }}</span><br><br>
+        <strong>Birth Star:</strong> <span style="color:#a3ffea;">{{ kundli_basic_info.birth_star or 'Not Available' }}</span>{% if kundli_basic_info.birth_star_pada %} (Pada <span style="color:#a3ffea;">{{ kundli_basic_info.birth_star_pada }}</span>){% endif %}<br><br>
+        <strong>Moon Sign:</strong> <span style="color:#a3ffea;">{{ kundli_basic_info.moon_sign or 'Not Available' }}</span><br><br>
+        <strong>Paksha:</strong> <span style="color:#a3ffea;">{{ kundli_basic_info.paksha or 'Not Available' }}</span><br><br>
+        <strong>Current Maha Dasha:</strong> <span style="color:#a3ffea;">{{ kundli_basic_info.current_maha_dasha_planet or 'Not Available' }}</span><br><br>
+        <strong>Maha Dasha Start:</strong> <span style="color:#a3ffea;">{{ kundli_basic_info.current_maha_dasha_start_date or 'Not Available' }}</span><br><br>
+        <strong>Maha Dasha End:</strong> <span style="color:#a3ffea;">{{ kundli_basic_info.current_maha_dasha_end_date or 'Not Available' }}</span>
+    </div>
+
+    <div class="section">
+        <h2>Planetary Positions</h2>
+        {% if astro_data.planetary_positions and astro_data.planetary_positions.planets %}
+        <table class="planets-table">
+            <tr>
+                <th>Planet</th><th>Sign</th><th>Degree</th><th>Nakshatra</th><th>House</th><th>Type</th>
+            </tr>
+            {% for planet in astro_data.planetary_positions.planets %}
+            <tr>
+                <td style="color: #4ecdc4; font-weight: 600;">{{ planet.name }}</td>
+                <td>{{ planet.sign }}</td>
+                <td>{{ planet.longitude or planet.full_degree }}</td>
+                <td>{{ planet.nakshatra }}{% if planet.nakshatra_pada %} ({{ planet.nakshatra_pada }}){% endif %}</td>
+                <td>{{ planet.house }}</td>
+                <td>{{ planet.type }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <div class="no-data">No planetary data available.</div>
+        {% endif %}
+    </div>
+
+    <div class="section">
+        <h2>Birth Charts</h2>
+        
+        <div class="chart-container">
+            <!-- D1 Chart (Lagna Chart) -->
+            <div class="chart-wrapper">
+                <h3 class="chart-title">D1 Chart (Lagna Chart)</h3>
+                {% if astro_data.horoscope_charts and astro_data.horoscope_charts.D1 and astro_data.horoscope_charts.D1.svg %}
+                    <div class="chart-svg" style="background:#fff; border-radius:12px; padding:1.5em;">
+                        {{ astro_data.horoscope_charts.D1.svg | safe }}
+                    </div>
+                {% else %}
+                <div class="no-data">No D1 chart available.</div>
+                {% endif %}
+            </div>
+            <!-- D9 Chart (Navamsha) -->
+            <div class="chart-wrapper">
+                <h3 class="chart-title">D9 Chart (Navamsha)</h3>
+                {% if astro_data.horoscope_charts and astro_data.horoscope_charts.D9 and astro_data.horoscope_charts.D9.svg %}
+                    <div class="chart-svg" style="background:#fff; border-radius:12px; padding:1.5em;">
+                        {{ astro_data.horoscope_charts.D9.svg | safe }}
+                    </div>
+                {% else %}
+                <div class="no-data">No D9 chart available.</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Dasha Analysis</h2>
+        {% if astro_data.dasha_analysis %}
+            {% for dasha in astro_data.dasha_analysis %}
+                <div class="info dasha-item">
+                    <strong>{{ dasha.analysis_type|capitalize }} Dasha:</strong>
+                    <span>{{ dasha.maha_planet }}{% if dasha.antar_planet %} / {{ dasha.antar_planet }}{% endif %}</span><br><br>
+                    <strong>From:</strong> {{ dasha.from_date }} <strong>To:</strong> {{ dasha.to_date }}<br><br>
+                    {% if dasha.analysis and dasha.analysis.analysis %}
+                    <strong>Career:</strong> {{ dasha.analysis.analysis.career }}<br><br>
+                    <strong>Health:</strong> {{ dasha.analysis.analysis.health }}<br><br>
+                    <strong>Finance:</strong> {{ dasha.analysis.analysis.finance }}<br><br>
+                    <strong>Relationships:</strong> {{ dasha.analysis.analysis.relationships }}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+        <div class="no-data">No dasha analysis available.</div>
+        {% endif %}
+    </div>
+
+    <div class="section">
+        <h2>Yogas</h2>
+        {% if astro_data.yogas %}
+            {% for yoga_key, yoga in astro_data.yogas.items() %}
+                {% if yoga.is_valid %}
+                <div class="info yoga-item">
+                    <strong>{{ yoga.name }}</strong><br><br>
+                    {% if yoga.content and yoga.content.detail %}
+                        <ul>
+                        {% for detail in yoga.content.detail %}
+                            <li>{{ detail }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+        <div class="no-data">No yogas found.</div>
+        {% endif %}
+    </div>
+
+    <div class="section">
+        <h2>Doshas</h2>
+        {% if astro_data.kaal_sarpa_dosha and astro_data.kaal_sarpa_dosha.result %}
+            <div class="info dosha-item">
+                <strong>Kaal Sarpa Dosha:</strong> {{ astro_data.kaal_sarpa_dosha.name }} ({{ astro_data.kaal_sarpa_dosha.intensity }})<br><br>
+                <strong>Direction:</strong> {{ astro_data.kaal_sarpa_dosha.direction }}<br><br>
+                <strong>Remedies:</strong>
+                <ul>
+                {% for remedy in astro_data.kaal_sarpa_dosha.remedies %}
+                    <li>{{ remedy }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        {% if astro_data.manglik_dosha and astro_data.manglik_dosha.manglik_dosha == 'Yes' %}
+            <div class="info dosha-item">
+                <strong>Manglik Dosha:</strong> Yes (Strength: {{ astro_data.manglik_dosha.strength }}, {{ astro_data.manglik_dosha.percentage }}%)<br><br>
+                <strong>Remedies:</strong>
+                <ul>
+                {% for remedy in astro_data.manglik_dosha.remedies %}
+                    <li>{{ remedy }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        {% if not (astro_data.kaal_sarpa_dosha and astro_data.kaal_sarpa_dosha.result) and not (astro_data.manglik_dosha and astro_data.manglik_dosha.manglik_dosha == 'Yes') %}
+            <div class="no-data">No doshas found.</div>
+        {% endif %}
+    </div>
+
+    <div class="section">
+        <h2>Ascendant Report</h2>
+        {% if astro_data.ascendant_report %}
+            <div class="info">
+                <strong>Ascendant:</strong> {{ astro_data.ascendant_report.ascendant }}<br><br>
+                <strong>Planetary Lord:</strong> {{ astro_data.ascendant_report.planetary_lord }}<br><br>
+                <strong>Symbol:</strong> {{ astro_data.ascendant_report.symble }}<br><br>
+                <strong>Characteristics:</strong> {{ astro_data.ascendant_report.characteristics }}<br><br>
+                <strong>Day of Fast:</strong> {{ astro_data.ascendant_report.day_of_fast }}<br><br>
+                <strong>Lucky Stone:</strong> {{ astro_data.ascendant_report.lucky_stone | join(', ') }}<br><br>
+                {% if astro_data.ascendant_report.image %}
+                <div style="text-align: center; margin: 1em 0;">
+                    <img src="{{ astro_data.ascendant_report.image }}" alt="Ascendant Image" style="border-radius: 50%; max-width: 120px;" />
+                </div>
+                {% endif %}
+                {% if astro_data.ascendant_report.analysis %}
+                <div><strong>Personality:</strong> {{ astro_data.ascendant_report.analysis.personality }}</div><br>
+                <div><strong>Career:</strong> {{ astro_data.ascendant_report.analysis.career }}</div><br>
+                <div><strong>Health:</strong> {{ astro_data.ascendant_report.analysis.health }}</div><br>
+                <div><strong>Finance:</strong> {{ astro_data.ascendant_report.analysis.finance }}</div><br>
+                <div><strong>Relationships:</strong> {{ astro_data.ascendant_report.analysis.relationships }}</div>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="no-data">No ascendant report found.</div>
+        {% endif %}
+    </div>
+</body>
+</html>

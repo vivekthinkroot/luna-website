@@ -1,0 +1,25 @@
+:root {
+  --font-primary: 'Roboto', sans-serif;
+  --font-secondary: 'Playfair Display', serif;
+  --color-text-primary: #f7eaff;
+  --color-text-secondary: #ffffff;
+  --gradient-bg: linear-gradient(180deg, #11001c 0%, #230735 100%);
+  --gradient-accent: linear-gradient(90deg, #ae80ff 0%, rgba(82, 105, 255, 0.8) 100%);
+  --card-bg: rgba(115, 69, 172, 0.2);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-primary);
+  background-color: #11001c;
+  color: var(--color-text-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+* {
+  box-sizing: border-box;
+}

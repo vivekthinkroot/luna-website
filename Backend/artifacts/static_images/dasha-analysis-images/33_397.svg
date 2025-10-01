@@ -1,0 +1,11 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Deactive Timeline Circle">
+<circle id="Ellipse 11" cx="10" cy="10" r="10" fill="url(#paint0_linear_33_397)"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_33_397" x1="10" y1="0" x2="10" y2="20" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FF80F2"/>
+<stop offset="1" stop-color="#7385F8"/>
+</linearGradient>
+</defs>
+</svg>

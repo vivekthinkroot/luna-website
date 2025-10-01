@@ -1,0 +1,149 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #11001c;
+  color: #f7eaff;
+}
+
+.page-container {
+  max-width: 595px;
+  min-height: 891px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, #11001c 0%, #230735 100%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 19px 20px 28px 20px;
+}
+
+/* Background elements structure like horoscope_charts */
+.background-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bg-image-main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bg-image-deco {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  z-index: 10;
+}
+
+.bg-blurs {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bg-blurs img {
+  position: absolute;
+  filter: blur(80px);
+  opacity: 0.7;
+}
+
+.blur-1 {
+  width: 231px;
+  height: 231px;
+  top: 315px;
+  left: 53px;
+}
+
+.blur-2 {
+  width: 262px;
+  height: 262px;
+  top: 199px;
+  left: 233px;
+}
+
+.blur-3 {
+  width: 257px;
+  height: 257px;
+  top: 350px;
+  left: 186px;
+}
+
+.background-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.background-layer img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bg-stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bg-blur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bg-deco {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  z-index: 10;
+  background-image: url('../static_images/yogas-images/f9329cf484a60fae70cce569fa7808d5b53f7f49.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+h1, h2, p {
+  margin: 0;
+}

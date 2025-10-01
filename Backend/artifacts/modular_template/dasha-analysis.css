@@ -1,0 +1,68 @@
+:root {
+  --text-primary: #f7eaff;
+  --bg-gradient: linear-gradient(180deg, #11001c 0%, #230735 100%);
+  --card-bg: rgba(115, 69, 172, 0.2);
+  --timeline-gradient: linear-gradient(90deg, #ae80ff 0%, rgba(8, 25, 135, 0.8) 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #11001c;
+  font-family: 'Roboto', sans-serif;
+  color: var(--text-primary);
+}
+
+.page-container {
+  max-width: 595px;
+  min-height: 842px;
+  margin: 0 auto;
+  background: var(--bg-gradient);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* Background images */
+  background-image: 
+    url('../static_images/dasha-analysis-images/efa57b83a1733119b6a1ac464c2b102b30abd334.png'),
+    url('../static_images/dasha-analysis-images/156_110.png');
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+}
+
+.background-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.background-layer__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.background-layer__blur {
+  position: absolute;
+  top: 199px;
+  left: 53px; /* 3827 - 3774 */
+  width: 442px;
+  height: 408px;
+}
+
+main {
+  flex-grow: 1;
+  position: relative;
+  z-index: 1;
+}

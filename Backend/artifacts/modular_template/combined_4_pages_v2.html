@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Combined Horoscope Report (12+ Pages) - {{ data.full_name | default('User') }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Roboto:wght@400&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Page break styles for combined printing */
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    
+    .page-container {
+      page-break-after: always;
+      margin: 0;
+    }
+    
+    .page-container:last-child {
+      page-break-after: avoid;
+    }
+    
+    @media print {
+      .page-container {
+        page-break-after: always;
+      }
+    }
+    
+    /* Hide body tags from included files */
+    .included-page body {
+      display: contents;
+    }
+
+    /* Global CSS Variables */
+    :root {
+      --font-primary: 'Roboto', sans-serif;
+      --font-secondary: 'Playfair Display', serif;
+      --color-text-primary: #f7eaff;
+      --color-text-secondary: #ffffff;
+      --color-light-lavender: #f7eaff;
+      --color-light-blue: #d3d9ff;
+      --gradient-bg: linear-gradient(180deg, #11001c 0%, #230735 100%);
+      --bg-gradient: linear-gradient(180deg, #11001c 0%, #230735 100%);
+      --gradient-accent: linear-gradient(90deg, #ae80ff 0%, rgba(82, 105, 255, 0.8) 100%);
+      --card-bg: rgba(115, 69, 172, 0.2);
+    }
+
+    /* Global styles */
+    * {
+      box-sizing: border-box;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    h1, h2, p {
+      margin: 0;
+    }
+
+    /* Override link styles for CSS */
+    .page-container link[rel="stylesheet"] {
+      display: none;
+    }
+
+    /* Increase logo size across all pages */
+    .logo {
+      width: 120px !important;
+      height: 120px !important;
+      max-width: 120px !important;
+      max-height: 120px !important;
+    }
+
+    /* Responsive logo sizing */
+    @media (max-width: 768px) {
+      .logo {
+        width: 100px !important;
+        height: 100px !important;
+        max-width: 100px !important;
+        max-height: 100px !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo {
+        width: 80px !important;
+        height: 80px !important;
+        max-width: 80px !important;
+        max-height: 80px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page 1: Poster -->
+  <div class="page-container">
+    {% set page_data = data %}
+    {% set standalone = false %}
+    {% include 'poster.html' %}
+  </div>
+
+  <!-- Page 2: Page1 (Sanskrit/Ganesha) -->
+  <div class="page-container">
+    {% set page_data = data %}
+    {% set standalone = false %}
+    {% include 'page1.html' %}
+  </div>
+
+  <!-- Page 3: User Profile - Basic Info (UserProfile1) -->
+  <div class="page-container">
+    {% set page_data = {
+      'full_name': data.full_name,
+      'user_profile': {
+        'row1': {'label': 'Name', 'value': data.full_name | default('N/A')},
+        'row2': {'label': 'Gender', 'value': data.gender | default('N/A')},
+        'row3': {'label': 'Date of Birth', 'value': data.date_of_birth | default('N/A')},
+        'row4': {'label': 'Time Zone', 'value': data.timezone | default('N/A')},
+        'row5': {'label': 'Place of Birth', 'value': data.place_of_birth | default('N/A')}
+      },
+      'page_number': '3 / 7'
+    } %}
+    {% set standalone = false %}
+    {% include 'user-profile.html' %}
+  </div>
+
+  <!-- Page 4: User Profile - Astrological Details (UserProfile2) -->
+  <div class="page-container">
+    {% set page_data = {
+      'full_name': data.full_name,
+      'user_profile': {
+        'row1': {'label': 'Longitude & Latitude', 'value': (data.longitude | default('N/A')) + '°E, ' + (data.latitude | default('N/A')) + '°N'},
+        'row2': {'label': 'Ayanamsha', 'value': data.ayanamsha | default('N/A')},
+        'row3': {'label': 'Birth Star (Nakshatra)', 'value': data.nakshatra | default('N/A')},
+        'row4': {'label': 'Birth Rasi (Moon Sign)', 'value': data.moon_sign | default('N/A')},
+        'row5': {'label': 'Lagna (Ascendant) & Lord', 'value': (data.ascendant | default('N/A')) + ' - ' + (data.planetary_lord | default('N/A'))}
+      },
+      'page_number': '4 / 7'
+    } %}
+    {% set standalone = false %}
+    {% include 'user-profile.html' %}
+  </div>
+
+  <!-- Page 5: D1 Birth Chart (Lagna Chart) -->
+  <div class="page-container">
+    {% set page_data = {
+      'full_name': data.full_name,
+      'page_number': '5 / 7'
+    } %}
+    {% set standalone = false %}
+    {% if data.d1_chart %}
+      {% set title_main = data.d1_chart.title_main %}
+      {% set title_sub = data.d1_chart.title_sub %}
+      {% set chart_description = data.d1_chart.chart_description %}
+      {% set chart_image = data.d1_chart.chart_image %}
+      {% set no_chart_title = data.d1_chart.no_chart_title %}
+    {% else %}
+      {% set title_main = "LAGNA CHART" %}
+      {% set title_sub = "BIRTH CHART (D1)" %}
+      {% set chart_description = "<strong>D1 Birth Chart:</strong> Shows planetary positions at birth, life path, and personality traits." %}
+      {% set chart_image = None %}
+      {% set no_chart_title = "D1 Chart Not Available" %}
+    {% endif %}
+    {% include 'horoscope_charts.html' %}
+  </div>
+
+  <!-- Page 6: D9 Navamsa Chart -->
+  <div class="page-container">
+    {% set page_data = {
+      'full_name': data.full_name,
+      'page_number': '6 / 7'
+    } %}
+    {% set standalone = false %}
+    {% if data.d9_chart %}
+      {% set title_main = data.d9_chart.title_main %}
+      {% set title_sub = data.d9_chart.title_sub %}
+      {% set chart_description = data.d9_chart.chart_description %}
+      {% set chart_image = data.d9_chart.chart_image %}
+      {% set no_chart_title = data.d9_chart.no_chart_title %}
+    {% else %}
+      {% set title_main = "NAVAMSA CHART" %}
+      {% set title_sub = "DIVISIONAL CHART (D9)" %}
+      {% set chart_description = "<strong>D9 Navamsa Chart:</strong> Reveals marriage compatibility, spiritual growth, and life's second half." %}
+      {% set chart_image = None %}
+      {% set no_chart_title = "D9 Chart Not Available" %}
+    {% endif %}
+    {% include 'horoscope_charts.html' %}
+  </div>
+
+  <!-- Page 7: Astrological Insights (Remedies) -->
+  <div class="page-container">
+    {% set page_data = {
+      'full_name': data.full_name,
+      'page_number': '7 / 8'
+    } %}
+    {% set standalone = false %}
+    {% include 'remedies.html' %}
+  </div>
+
+  <!-- Page 8: Antar Dasha -->
+  <div class="page-container">
+    {% set page_data = {
+      'full_name': data.full_name,
+      'page_number': '8 / 12'
+    } %}
+    {% set standalone = false %}
+    {% include 'antar-dasha-dates.html' %}
+  </div>
+
+  <!-- Page 9: Dasha Analysis - Career -->
+  <div class="page-container">
+    {% set page_data = {
+      'full_name': data.full_name,
+      'page_number': '9 / 12'
+    } %}
+    {% set standalone = false %}
+    {% set analysis_content = data.dasha_analysis.career %}
+    {% include 'dasha-analysis.html' %}
+  </div>
+
+  <!-- Page 10: Dasha Analysis - Health -->
+  <div class="page-container">
+    {% set page_data = {
+      'full_name': data.full_name,
+      'page_number': '10 / 12'
+    } %}
+    {% set standalone = false %}
+    {% set analysis_content = data.dasha_analysis.health %}
+    {% include 'dasha-analysis.html' %}
+  </div>
+
+  <!-- Page 11: Dasha Analysis - Finance -->
+  <div class="page-container">
+    {% set page_data = {
+      'full_name': data.full_name,
+      'page_number': '11 / 12'
+    } %}
+    {% set standalone = false %}
+    {% set analysis_content = data.dasha_analysis.finance %}
+    {% include 'dasha-analysis.html' %}
+  </div>
+
+  <!-- Page 12: Dasha Analysis - Relationships -->
+  <div class="page-container">
+    {% set page_data = {
+      'full_name': data.full_name,
+      'page_number': '12 / 12+'
+    } %}
+    {% set standalone = false %}
+    {% set analysis_content = data.dasha_analysis.relationships %}
+    {% include 'dasha-analysis.html' %}
+  </div>
+
+  <!-- Yogas Pages (13+) - One page per valid yoga -->
+  {% if data.yogas and data.yogas.valid_yogas %}
+    {% for yoga in data.yogas.valid_yogas %}
+      <div class="page-container">
+        {% set page_data = {
+          'full_name': data.full_name,
+          'page_number': (loop.index + 12) | string + ' / ' + ((data.yogas.valid_yogas | length) + 13) | string
+        } %}
+        {% set standalone = false %}
+        {% set yoga_data = yoga %}
+        {% include 'yogas.html' %}
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <!-- Ashtakavarga Page - Final Page -->
+  {% if data.ashtakavarga %}
+    <div class="page-container">
+      {% set yoga_pages = data.yogas.valid_yogas | length if data.yogas and data.yogas.valid_yogas else 0 %}
+      {% set page_data = {
+        'full_name': data.full_name,
+        'page_number': (yoga_pages + 13) | string + ' / ' + (yoga_pages + 13) | string
+      } %}
+      {% set standalone = false %}
+      {% include 'ashtakavarga.html' %}
+    </div>
+  {% endif %}
+
+</body>
+</html>

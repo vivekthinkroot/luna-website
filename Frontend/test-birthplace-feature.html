@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthplace Feature Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #230735;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+    }
+    .section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 5px;
+      border-left: 4px solid #230735;
+    }
+    .section h2 {
+      color: #230735;
+      margin-top: 0;
+      font-size: 18px;
+    }
+    button {
+      background: #230735;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+    button:hover {
+      background: #3a1156;
+    }
+    .data-display {
+      background: #2a2a2a;
+      color: #0f0;
+      padding: 15px;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      margin-top: 10px;
+      white-space: pre-wrap;
+    }
+    .success {
+      color: #28a745;
+      font-weight: bold;
+    }
+    .error {
+      color: #dc3545;
+      font-weight: bold;
+    }
+    input {
+      padding: 8px 12px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      margin-right: 10px;
+      width: 200px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🌍 Birthplace Feature Test</h1>
+    <p class="subtitle">Test the localStorage functionality for birthplace data</p>
+
+    <!-- Test 1: Save Data -->
+    <div class="section">
+      <h2>1. Save Test Data</h2>
+      <p>Click to save sample birthplace data to localStorage:</p>
+      <button onclick="saveTestData('Kabul', 'Afghanistan', 34.5333, 69.1667)">
+        Save Kabul, Afghanistan
+      </button>
+      <button onclick="saveTestData('Mumbai', 'India', 19.076, 72.8777)">
+        Save Mumbai, India
+      </button>
+      <button onclick="saveTestData('New York', 'United States', 40.7128, -74.0060)">
+        Save New York, United States
+      </button>
+      <div id="save-result"></div>
+    </div>
+
+    <!-- Test 2: Retrieve Data -->
+    <div class="section">
+      <h2>2. Retrieve Stored Data</h2>
+      <p>Click to retrieve and display birthplace data from localStorage:</p>
+      <button onclick="retrieveData()">Retrieve Data</button>
+      <div id="retrieve-result"></div>
+    </div>
+
+    <!-- Test 3: Custom Data -->
+    <div class="section">
+      <h2>3. Save Custom Data</h2>
+      <p>Enter custom data to save:</p>
+      <div style="margin-bottom: 10px;">
+        <input type="text" id="custom-city" placeholder="City" value="London">
+        <input type="text" id="custom-country" placeholder="Country" value="United Kingdom">
+      </div>
+      <div style="margin-bottom: 10px;">
+        <input type="number" id="custom-lat" placeholder="Latitude" value="51.5074" step="0.0001">
+        <input type="number" id="custom-lng" placeholder="Longitude" value="-0.1278" step="0.0001">
+      </div>
+      <button onclick="saveCustomData()">Save Custom Data</button>
+      <div id="custom-result"></div>
+    </div>
+
+    <!-- Test 4: Format Display -->
+    <div class="section">
+      <h2>4. Formatted Display</h2>
+      <p>Get formatted string (City, Country):</p>
+      <button onclick="getFormatted()">Get Formatted String</button>
+      <div id="format-result"></div>
+    </div>
+
+    <!-- Test 5: Clear Data -->
+    <div class="section">
+      <h2>5. Clear Data</h2>
+      <p>Remove all birthplace data from localStorage:</p>
+      <button onclick="clearData()" style="background: #dc3545;">Clear All Data</button>
+      <div id="clear-result"></div>
+    </div>
+
+    <!-- Test 6: Check Browser Storage -->
+    <div class="section">
+      <h2>6. View localStorage Keys</h2>
+      <p>Display all birthplace-related keys in localStorage:</p>
+      <button onclick="viewAllKeys()">View All Keys</button>
+      <div id="keys-result"></div>
+    </div>
+  </div>
+
+  <script>
+    // Save test data
+    function saveTestData(city, country, lat, lng) {
+      localStorage.setItem('birthplace_city', city);
+      localStorage.setItem('birthplace_country', country);
+      localStorage.setItem('birthplace_lat', lat.toString());
+      localStorage.setItem('birthplace_lng', lng.toString());
+      
+      document.getElementById('save-result').innerHTML = 
+        `<div class="data-display success">✓ Saved: ${city}, ${country} (${lat}, ${lng})</div>`;
+    }
+
+    // Retrieve data
+    function retrieveData() {
+      const city = localStorage.getItem('birthplace_city');
+      const country = localStorage.getItem('birthplace_country');
+      const lat = localStorage.getItem('birthplace_lat');
+      const lng = localStorage.getItem('birthplace_lng');
+
+      if (!city || !country || !lat || !lng) {
+        document.getElementById('retrieve-result').innerHTML = 
+          `<div class="data-display error">✗ No data found in localStorage</div>`;
+        return;
+      }
+
+      const data = {
+        city: city,
+        country: country,
+        latitude: parseFloat(lat),
+        longitude: parseFloat(lng)
+      };
+
+      document.getElementById('retrieve-result').innerHTML = 
+        `<div class="data-display">` +
+        `<strong>Retrieved Data:</strong>\n` +
+        `City: ${data.city}\n` +
+        `Country: ${data.country}\n` +
+        `Latitude: ${data.latitude}°\n` +
+        `Longitude: ${data.longitude}°\n\n` +
+        `<strong>Full Object:</strong>\n` +
+        JSON.stringify(data, null, 2) +
+        `</div>`;
+    }
+
+    // Save custom data
+    function saveCustomData() {
+      const city = document.getElementById('custom-city').value;
+      const country = document.getElementById('custom-country').value;
+      const lat = parseFloat(document.getElementById('custom-lat').value);
+      const lng = parseFloat(document.getElementById('custom-lng').value);
+
+      if (!city || !country || isNaN(lat) || isNaN(lng)) {
+        document.getElementById('custom-result').innerHTML = 
+          `<div class="data-display error">✗ Please fill all fields correctly</div>`;
+        return;
+      }
+
+      saveTestData(city, country, lat, lng);
+      document.getElementById('custom-result').innerHTML = 
+        `<div class="data-display success">✓ Custom data saved successfully!</div>`;
+    }
+
+    // Get formatted string
+    function getFormatted() {
+      const city = localStorage.getItem('birthplace_city');
+      const country = localStorage.getItem('birthplace_country');
+
+      if (!city || !country) {
+        document.getElementById('format-result').innerHTML = 
+          `<div class="data-display error">✗ No data to format</div>`;
+        return;
+      }
+
+      const formatted = `${city}, ${country}`;
+      document.getElementById('format-result').innerHTML = 
+        `<div class="data-display"><strong>Formatted String:</strong>\n"${formatted}"</div>`;
+    }
+
+    // Clear data
+    function clearData() {
+      localStorage.removeItem('birthplace_city');
+      localStorage.removeItem('birthplace_country');
+      localStorage.removeItem('birthplace_lat');
+      localStorage.removeItem('birthplace_lng');
+
+      document.getElementById('clear-result').innerHTML = 
+        `<div class="data-display success">✓ All birthplace data cleared from localStorage</div>`;
+    }
+
+    // View all keys
+    function viewAllKeys() {
+      const keys = ['birthplace_city', 'birthplace_country', 'birthplace_lat', 'birthplace_lng'];
+      let output = '<div class="data-display"><strong>localStorage Keys:</strong>\n\n';
+
+      keys.forEach(key => {
+        const value = localStorage.getItem(key);
+        output += `${key}: ${value !== null ? '"' + value + '"' : '<em>not set</em>'}\n`;
+      });
+
+      output += '</div>';
+      document.getElementById('keys-result').innerHTML = output;
+    }
+
+    // Auto-load on page load
+    window.addEventListener('load', () => {
+      viewAllKeys();
+    });
+  </script>
+</body>
+</html>
+

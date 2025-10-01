@@ -1,0 +1,72 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #11001c;
+  color: #f7eaff;
+}
+
+.report-page-wrapper {
+  max-width: 595px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, #11001c 0%, #230735 100%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 842px;
+  /* Background images */
+  background-image: 
+    url('../static_images/antar-dasha-dates-images/efa57b83a1733119b6a1ac464c2b102b30abd334.png'),
+    url('../static_images/antar-dasha-dates-images/156_236.png');
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+}
+
+.background-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.background-container .background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.background-container .background-blur {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 74%;
+  height: auto;
+}
+
+section {
+  position: relative;
+  z-index: 1;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+@media (max-width: 595px) {
+  .report-page-wrapper {
+    width: 100%;
+    min-height: 100vh;
+  }
+}

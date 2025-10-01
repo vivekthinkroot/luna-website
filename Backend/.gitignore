@@ -1,0 +1,27 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+.pytest_cache/
+
+# Environments
+.env
+luna-config.json
+.venv
+venv/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Docker
+*.pid
+docker-compose.override.yml
+
+# AI tools
+/tech-docs
+
+# Logs
+/logs
+/output
+/tests/output

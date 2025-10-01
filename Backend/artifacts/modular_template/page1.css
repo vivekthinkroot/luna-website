@@ -1,0 +1,21 @@
+:root {
+  --color-light-lavender: #f7eaff;
+  --color-light-blue: #d3d9ff;
+  --font-primary: 'Playfair Display', serif;
+  --bg-gradient: linear-gradient(180deg, #11001c 0%, #230735 100%);
+}
+
+body {
+  margin: 0;
+  padding: 20px 0;
+  background-color: #11001c;
+  font-family: var(--font-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}

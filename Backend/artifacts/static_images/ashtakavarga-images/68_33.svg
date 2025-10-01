@@ -1,0 +1,15 @@
+<svg width="13" height="24" viewBox="0 0 13 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Jupiter_symbol 1" clip-path="url(#clip0_68_33)">
+<path id="Vector" d="M2.5 1.99988C3.4655 2.75992 4.26727 3.85316 4.8247 5.16969C5.38214 6.48622 5.67561 7.97966 5.67561 9.49988C5.67561 11.0201 5.38214 12.5135 4.8247 13.8301C4.26727 15.1466 3.4655 16.2398 2.5 16.9999H13.5M9.83333 11.9999V21.9999" stroke="url(#paint0_linear_68_33)" stroke-width="2" stroke-miterlimit="1.5" stroke-linejoin="bevel"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_68_33" x1="8" y1="1.99988" x2="8" y2="21.9999" gradientUnits="userSpaceOnUse">
+<stop stop-color="#6DCDEC"/>
+<stop offset="0.5" stop-color="#007196"/>
+<stop offset="0.798077" stop-color="#F38558"/>
+</linearGradient>
+<clipPath id="clip0_68_33">
+<rect width="13" height="24" fill="white"/>
+</clipPath>
+</defs>
+</svg>

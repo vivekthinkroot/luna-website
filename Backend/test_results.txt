@@ -1,0 +1,19 @@
+﻿================================================================================
+IMAGE ACCESSIBILITY UNIT TESTS
+================================================================================
+
+[TEST 1] Checking artifacts directory...
+python : Traceback (most recent call last):
+At C:\Users\vivek\AppData\Local\Temp\ps-script-a6d5cb62-d781-4780-a8cc-349bd14ed7d1.ps1:80 char:81
++ ... website-main\Backend; python test_image_accessibility.py 2>&1 | Out-F ...
++                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "C:\Users\vivek\Downloads\luna-website-main-latest\luna-website-main\Backend\test_image_accessibility.py", line 
+18, in <module>
+    print(f"\u2705 Artifacts directory exists: {artifacts_dir}")
+  File "C:\Users\vivek\AppData\Local\Programs\Python\Python312\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2705' in position 0: character maps to <undefined>

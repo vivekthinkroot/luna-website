@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Image Visibility Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        
+        .test-container {
+            max-width: 595px;
+            margin: 0 auto;
+            background: linear-gradient(180deg, #11001c 0%, #230735 100%);
+            min-height: 842px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .background-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .bg-stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .bg-blur {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .bg-deco {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            z-index: 10;
+        }
+        
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+        }
+        
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .status.visible { background: #4CAF50; color: white; }
+        .status.hidden { background: #f44336; color: white; }
+        .status.partial { background: #ff9800; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Background Image Visibility Test</h1>
+    <p>This test verifies that background images are properly loaded and visible.</p>
+    
+    <div class="test-container">
+        <div class="background-layer">
+            <img id="bg-stars" src="" alt="Starry background" class="bg-stars">
+            <img id="bg-blur" src="" alt="Background gradient blur" class="bg-blur">
+            <img id="bg-deco" src="" alt="Background decoration" class="bg-deco">
+        </div>
+        
+        <div class="content">
+            <div class="test-section">
+                <h2>Image Loading Status</h2>
+                <p>Starry Background: <span id="stars-status" class="status">Loading...</span></p>
+                <p>Gradient Blur: <span id="blur-status" class="status">Loading...</span></p>
+                <p>Logo/Decoration: <span id="deco-status" class="status">Loading...</span></p>
+            </div>
+            
+            <div class="test-section">
+                <h2>CSS Stacking Test</h2>
+                <p>This content should be visible above the background images (z-index: 1)</p>
+                <p>Background images should be behind this content (z-index: 0)</p>
+                <p>Logo should be visible in top-left corner (z-index: 10)</p>
+            </div>
+            
+            <div class="test-section">
+                <h2>Image Dimensions Test</h2>
+                <p>Starry Background: <span id="stars-dimensions">-</span></p>
+                <p>Gradient Blur: <span id="blur-dimensions">-</span></p>
+                <p>Logo/Decoration: <span id="deco-dimensions">-</span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Test image loading and visibility
+        function testImageVisibility() {
+            const images = {
+                'bg-stars': 'stars',
+                'bg-blur': 'blur', 
+                'bg-deco': 'deco'
+            };
+            
+            Object.entries(images).forEach(([imgId, name]) => {
+                const img = document.getElementById(imgId);
+                const statusEl = document.getElementById(`${name}-status`);
+                const dimensionsEl = document.getElementById(`${name}-dimensions`);
+                
+                if (img.src && img.src !== '') {
+                    img.onload = function() {
+                        statusEl.textContent = 'Visible';
+                        statusEl.className = 'status visible';
+                        dimensionsEl.textContent = `${img.naturalWidth}x${img.naturalHeight}`;
+                    };
+                    
+                    img.onerror = function() {
+                        statusEl.textContent = 'Error Loading';
+                        statusEl.className = 'status hidden';
+                        dimensionsEl.textContent = 'Error';
+                    };
+                } else {
+                    statusEl.textContent = 'No Source';
+                    statusEl.className = 'status hidden';
+                    dimensionsEl.textContent = 'No Source';
+                }
+            });
+        }
+        
+        // Load test images (using placeholder data URLs for testing)
+        function loadTestImages() {
+            // These would be replaced with actual base64 data from the backend
+            const testImages = {
+                'bg-stars': 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
+                'bg-blur': 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
+                'bg-deco': 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='
+            };
+            
+            Object.entries(testImages).forEach(([imgId, src]) => {
+                document.getElementById(imgId).src = src;
+            });
+            
+            // Test after a short delay to allow images to load
+            setTimeout(testImageVisibility, 1000);
+        }
+        
+        // Run test when page loads
+        window.onload = loadTestImages;
+    </script>
+</body>
+</html>

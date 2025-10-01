@@ -1,0 +1,231 @@
+{% if standalone|default(true) %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page_title | default('Generated Page') }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Roboto:wght@400&display=swap" rel="stylesheet">
+  <style>
+    /* Poster CSS */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #11001c;
+      color: #f7eaff;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    h1, h2, p {
+      margin: 0;
+    }
+  </style>
+{% endif %}
+<style{% if standalone|default(true) %} id="sections-styles"{% endif %}>
+/* CSS for section section:poster */
+.poster-container {
+    max-width: 595px;
+    min-height: 842px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, #11001c 0%, #230735 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    padding: 34px 0;
+  }
+
+  .background-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .bg-blur-1 {
+    position: absolute;
+    top: 140px;
+    left: 0;
+    width: 442px;
+    height: 408px;
+  }
+
+  .bg-pattern {
+    position: absolute;
+    top: -87px;
+    left: 647px;
+    width: 845px;
+    height: 845px;
+  }
+
+  .bg-ellipse-1 {
+    position: absolute;
+    top: 660px;
+    left: 368px;
+    width: 196px;
+    height: 196px;
+    filter: blur(120px);
+  }
+
+  .bg-ellipse-2 {
+    position: absolute;
+    top: 646px;
+    left: -98px;
+    width: 196px;
+    height: 196px;
+    filter: blur(120px);
+  }
+
+  .poster-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+    max-width: 433px;
+    padding: 0 20px;
+  }
+
+  .poster-header {
+    width: 110px;
+    height: 112px;
+  }
+
+  .logo {
+    width: 100%;
+    height: 100%;
+  }
+
+  .zodiac-wheel {
+    width: 100%;
+    max-width: 433px;
+  }
+
+  .poster-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+  }
+
+  .author-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 1.33;
+    background: linear-gradient(90deg, #ffd46d 0%, #e9b843 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .report-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .report-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .report-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.33;
+    color: #f7eaff;
+  }
+
+  .report-main-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 1.33;
+    color: #f7eaff;
+  }
+
+  .report-type {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.17;
+    letter-spacing: 0.9px;
+    color: #f7eaff;
+  }
+
+  @media (max-width: 600px) {
+    .poster-container {
+      min-height: auto;
+    }
+    .author-name,
+    .report-main-title {
+      font-size: 9vw;
+    }
+
+    .report-subtitle {
+      font-size: 6vw;
+    }
+
+    .report-type {
+      font-size: 4.5vw;
+    }
+  }
+  </style>
+{% if standalone|default(true) %}
+  <script src="global.js" defer></script>
+</head>
+<body>
+{% endif %}
+<section id="poster">
+  <div class="poster-container">
+    <div class="background-elements">
+      <img src="{{BG_BLUR_BASE64}}" alt="Background blur effect" class="bg-blur-1">
+      <img src="{{BG_PATTERN_BASE64}}" alt="Background star pattern" class="bg-pattern">
+      <img src="{{BG_ELLIPSE_1_BASE64}}" alt="Background blur ellipse" class="bg-ellipse-1">
+      <img src="{{BG_ELLIPSE_2_BASE64}}" alt="Background blur ellipse" class="bg-ellipse-2">
+    </div>
+    <main class="poster-content">
+      <header class="poster-header">
+        <img src="{{LOGO_BASE64}}" alt="Luna Logo" class="logo">
+      </header>
+      <img src="{{ZODIAC_WHEEL_BASE64}}" alt="Zodiac Wheel" class="zodiac-wheel">
+      <footer class="poster-footer">
+        <h1 class="author-name">{{ data.full_name | default('H. Gurumurthy') }}</h1>
+        <div class="report-info">
+          <div class="report-title">
+            <p class="report-subtitle">IN-DEPTH</p>
+            <h2 class="report-main-title">HOROSCOPE</h2>
+          </div>
+          <p class="report-type">PREMIUM REPORT</p>
+        </div>
+      </footer>
+    </main>
+  </div>
+</section>
+{% if standalone|default(true) %}
+</body>
+</html>
+{% endif %}

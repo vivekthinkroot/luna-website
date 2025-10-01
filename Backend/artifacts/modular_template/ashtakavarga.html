@@ -1,0 +1,142 @@
+{% if standalone|default(true) %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page_title | default('AshtakaVarga Predictions') }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Roboto:wght@400&display=swap" rel="stylesheet">
+{% endif %}
+<link rel="stylesheet" href="ashtakavarga-background.css">
+<style{% if standalone|default(true) %} id="sections-styles"{% endif %}>
+/* Additional inline styles if needed */
+  </style>
+{% if standalone|default(true) %}
+  <script src="global.js" defer></script>
+</head>
+<body>
+{% endif %}
+<div class="horoscope-card">
+  <div class="background-elements">
+    <img src="{{BG_MAIN_BASE64}}" alt="Abstract background" class="bg-image-main">
+    <img src="{{BG_DECO_BASE64}}" alt="Decorative background element" class="bg-image-deco">
+    <div class="bg-blurs">
+      <img src="{{BLUR_1_BASE64}}" alt="Blurred light effect" class="blur-1">
+      <img src="{{BLUR_2_BASE64}}" alt="Blurred light effect" class="blur-2">
+      <img src="{{BLUR_3_BASE64}}" alt="Blurred light effect" class="blur-3">
+    </div>
+  </div>
+
+  <div class="card-body">
+    <header class="card-header">
+      <img src="{{LOGO_BASE64}}" alt="Luna Logo" class="logo">
+      <div class="title-group">
+        <h1 class="title-main">IN-DEPTH</h1>
+        <p class="title-sub">HOROSCOPE</p>
+      </div>
+    </header>
+
+    <div class="card-content">
+      <div class="ashtakavarga-content">
+        <h2 class="ashtakavarga-title">{{ title | default('AshtakaVarga Predictions') }}</h2>
+        <img src="{{TITLE_DIVIDER_BASE64}}" alt="Decorative divider" class="title-divider">
+      </div>
+
+      <div class="ashtakavarga-table-container">
+        <div class="planet-grid">
+          <!-- Moon -->
+          <div class="planet-card">
+            <div class="planet-header">
+              <img src="{{MOON_ICON_BASE64}}" alt="Moon" class="planet-image">
+              <span class="planet-name">Moon</span>
+            </div>
+            <div class="planet-points">
+              <span class="points-value">{{ data.ashtakavarga.data[0].total_points if data.ashtakavarga and data.ashtakavarga.data and data.ashtakavarga.data|length > 0 else '25' }}</span>
+            </div>
+          </div>
+
+          <!-- Sun -->
+          <div class="planet-card">
+            <div class="planet-header">
+              <img src="{{SUN_ICON_BASE64}}" alt="Sun" class="planet-image">
+              <span class="planet-name">Sun</span>
+            </div>
+            <div class="planet-points">
+              <span class="points-value">{{ data.ashtakavarga.data[1].total_points if data.ashtakavarga and data.ashtakavarga.data and data.ashtakavarga.data|length > 1 else '28' }}</span>
+            </div>
+          </div>
+
+          <!-- Mercury -->
+          <div class="planet-card">
+            <div class="planet-header">
+              <img src="{{MERCURY_ICON_BASE64}}" alt="Mercury" class="planet-image">
+              <span class="planet-name">Mercury</span>
+            </div>
+            <div class="planet-points">
+              <span class="points-value">{{ data.ashtakavarga.data[2].total_points if data.ashtakavarga and data.ashtakavarga.data and data.ashtakavarga.data|length > 2 else '30' }}</span>
+            </div>
+          </div>
+
+          <!-- Venus -->
+          <div class="planet-card">
+            <div class="planet-header">
+              <img src="{{VENUS_ICON_BASE64}}" alt="Venus" class="planet-image">
+              <span class="planet-name">Venus</span>
+            </div>
+            <div class="planet-points">
+              <span class="points-value">{{ data.ashtakavarga.data[3].total_points if data.ashtakavarga and data.ashtakavarga.data and data.ashtakavarga.data|length > 3 else '32' }}</span>
+            </div>
+          </div>
+
+          <!-- Mars -->
+          <div class="planet-card">
+            <div class="planet-header">
+              <img src="{{MARS_ICON_BASE64}}" alt="Mars" class="planet-image">
+              <span class="planet-name">Mars</span>
+            </div>
+            <div class="planet-points">
+              <span class="points-value">{{ data.ashtakavarga.data[4].total_points if data.ashtakavarga and data.ashtakavarga.data and data.ashtakavarga.data|length > 4 else '35' }}</span>
+            </div>
+          </div>
+
+          <!-- Jupiter -->
+          <div class="planet-card">
+            <div class="planet-header">
+              <img src="{{JUPITER_ICON_BASE64}}" alt="Jupiter" class="planet-image">
+              <span class="planet-name">Jupiter</span>
+            </div>
+            <div class="planet-points">
+              <span class="points-value">{{ data.ashtakavarga.data[5].total_points if data.ashtakavarga and data.ashtakavarga.data and data.ashtakavarga.data|length > 5 else '33' }}</span>
+            </div>
+          </div>
+
+          <!-- Saturn -->
+          <div class="planet-card">
+            <div class="planet-header">
+              <img src="{{SATURN_ICON_BASE64}}" alt="Saturn" class="planet-image">
+              <span class="planet-name">Saturn</span>
+            </div>
+            <div class="planet-points">
+              <span class="points-value">{{ data.ashtakavarga.data[6].total_points if data.ashtakavarga and data.ashtakavarga.data and data.ashtakavarga.data|length > 6 else '31' }}</span>
+            </div>
+          </div>
+                </div>
+
+        <div class="ashtakavarga-footnote">
+          <p>{{ footnote | default('*Planetary Position in ' + (rashi_name | default('Mesha')) + '.<br>Lagna in ' + (lagna_name | default('Simha')) + '.') | safe }}</p>
+        </div>
+      </div>
+    </div>
+
+    <footer class="card-footer">
+      <p class="footer-name">{{ author_name | default('H. Gurumurthy') }}</p>
+      <p class="footer-pagination">{{ page_number | default('1 / 20') }}</p>
+    </footer>
+  </div>
+</div>
+{% if standalone|default(true) %}
+</body>
+</html>
+{% endif %}

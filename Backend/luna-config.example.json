@@ -1,0 +1,58 @@
+{
+  "database": {
+    "url": "postgresql://user:password@localhost:5432/luna_db"
+  },
+  "telegram": {
+    "bot_token": "your_telegram_bot_token",
+    "webhook_secret": "your_webhook_secret",
+    "max_message_length": 4096,
+    "webhook_base_url": "https://your-domain.com",
+    "webhook_path": "/webhook/telegram"
+  },
+  "whatsapp": {
+    "access_token": "your_whatsapp_access_token",
+    "phone_number_id": "your_phone_number_id",
+    "webhook_verify_token": "your_verify_token",
+    "webhook_secret": "your_webhook_secret",
+    "max_message_length": 4096,
+    "webhook_path": "/webhook/whatsapp"
+  },
+  "apis": {
+    "divine_api_key": "your_divine_api_key",
+    "divine_access_token": "your_divine_access_token",
+    "elevenlabs_api_key": "your_elevenlabs_api_key",
+    "sarvam_api_key": "your_sarvam_api_key"
+  },
+  "aws": {
+    "access_key_id": "your_aws_access_key",
+    "secret_access_key": "your_aws_secret_key",
+    "s3_bucket_name": "your_s3_bucket",
+    "region": "ap-south-1"
+  },
+  "llm": {
+    "allowed_providers": ["openai"],
+    "allowed_models": ["gpt-4.1-mini"],
+    "default_provider": "openai",
+    "default_model": "gpt-4.1-mini",
+    "provider_openai_base_url": "https://api.openai.com/v1",
+    "provider_openai_api_key": "your_openai_api_key"
+  },
+  "session": {
+    "max_turns_in_cache": 20,
+    "max_cache_size": 10000
+  },
+  "logging": {
+    "debug_mode": true,
+    "default_log_level": "INFO",
+    "sqlalchemy_engine_level": "WARNING"
+  },
+  "razorpay": {
+    "API_KEY": "your_razorpay_key",
+    "API_SECRET": "your_razorpay_secret",
+    "BASE_URL": "https://api.razorpay.com/v1",
+    "CALLBACK_BASE_URL": "https://your-domain.com/payment-callback"
+  },
+  "kundli": {
+    "send_pdf_to_user": false
+  }
+}

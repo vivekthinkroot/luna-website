@@ -1,0 +1,307 @@
+{% if standalone|default(true) %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page_title | default('Remedies - In-Depth Horoscope') }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Playfair+Display:wght@400&display=swap" rel="stylesheet">
+{% endif %}
+<link rel="stylesheet" href="remedies.css">
+<style{% if standalone|default(true) %} id="sections-styles"{% endif %}>
+/* CSS for remedies page */
+.page-container {
+    max-width: 595px;
+    min-height: 842px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, #11001c 0%, #230735 100%);
+    position: relative;
+    overflow: hidden;
+    color: #f7eaff;
+    padding: 19px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.background-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.bg-blur {
+    position: absolute;
+    top: 199px;
+    left: 53px;
+    width: 442px;
+    height: 408px;
+}
+
+.page-header, .remedies-section, .page-footer {
+    position: relative;
+    z-index: 1;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 31px;
+}
+
+.logo {
+    width: 81px;
+    height: 82px;
+}
+
+.report-title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1;
+    text-align: right;
+}
+
+.remedies-section {
+    text-align: center;
+    margin-bottom: 30px;
+    flex-grow: 1;
+}
+
+.intro-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.intro-heading h1 {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.17;
+}
+
+.title-decoration {
+    width: 126px;
+    height: 33px;
+}
+
+.intro-description {
+    margin: 0 auto 30px auto;
+    max-width: 519px;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.remedies-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 17px;
+}
+
+.remedy-card {
+    background-color: rgba(115, 69, 172, 0.2);
+    border-radius: 16px;
+    backdrop-filter: blur(5px);
+    overflow: hidden;
+    position: relative;
+    padding: 22px 18px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 230px;
+}
+
+.card-text h2 {
+    margin: 0 0 10px 0;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.card-text p {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.card-image-container {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.remedy-card:nth-child(1) .card-image { width: 126px; height: 108px; }
+.remedy-card:nth-child(2) .card-image { width: 103px; height: 110px; }
+.remedy-card:nth-child(3) .card-image { width: 103px; height: 110px; }
+
+.merged-image {
+    width: 159px;
+    height: 159px;
+}
+
+.card-image-bg {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 158.52px;
+    height: 159.2px;
+}
+
+.card-image-fg {
+    position: absolute;
+    bottom: -11px;
+    right: 0;
+    width: 63px;
+    height: 63px;
+}
+
+.page-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+.author-name {
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.pagination {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+@media (max-width: 600px) {
+    .page-container {
+        padding: 15px;
+        min-height: auto;
+    }
+    .remedies-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .page-header {
+        flex-direction: column;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+    .report-title {
+        align-items: center;
+    }
+}
+</style>
+{% if standalone|default(true) %}
+  <script src="global.js" defer></script>
+</head>
+<body>
+{% endif %}
+
+<main class="page-container">
+    <div class="background-elements">
+        <img src="{{BG_MAIN_BASE64}}" alt="Starry background" class="bg-image">
+        <img src="{{BG_BLUR_BASE64}}" alt="Gradient blur effect" class="bg-blur">
+    </div>
+
+    <header class="page-header">
+        <img src="{{LOGO_BASE64}}" alt="Luna Logo" class="logo">
+        <div class="report-title">
+            <span>IN-DEPTH</span>
+            <span>HOROSCOPE</span>
+        </div>
+    </header>
+
+    <section id="remedies" class="remedies-section">
+        <div class="intro-heading">
+            <h1>{% if data.astro_insights %}{{ data.astro_insights.main_heading }}{% else %}Astrological Insights{% endif %}</h1>
+            <img src="{{TITLE_DECORATION_BASE64}}" alt="Decorative swirl" class="title-decoration">
+        </div>
+        <p class="intro-description">{% if data.astro_insights %}{{ data.astro_insights.description }}{% else %}Includes relevant astrological facts.{% endif %}</p>
+
+        <div class="remedies-grid">
+            <!-- Grid Item 1: Ghata Chakra -->
+            <article class="remedy-card">
+                <div class="card-text">
+                    <h2>{% if data.astro_insights %}{{ data.astro_insights.grid_1_heading }}{% else %}Ghata Chakra{% endif %}</h2>
+                    <p>{% if data.astro_insights %}{{ data.astro_insights.grid_1_content | default('Not Available') }}{% else %}Ghata Chakra details not available.{% endif %}</p>
+                </div>
+                <div class="card-image-container">
+                    <img src="{{REMEDY_1_IMAGE_BASE64}}" alt="Illustration for Ghata Chakra" class="card-image">
+                </div>
+            </article>
+
+            <!-- Grid Item 2: Ascendant Details -->
+            <article class="remedy-card">
+                <div class="card-text">
+                    <h2>{% if data.astro_insights %}{{ data.astro_insights.grid_2_heading }}{% else %}Ascendant Details{% endif %}</h2>
+                    <p>{% if data.astro_insights %}{{ data.astro_insights.grid_2_content | default('Not Available') }}{% else %}Ascendant details not available.{% endif %}</p>
+                </div>
+                <div class="card-image-container">
+                    <img src="{{REMEDY_2_IMAGE_BASE64}}" alt="Illustration for Ascendant Details" class="card-image">
+                </div>
+            </article>
+
+            <!-- Grid Item 3: Lucky Stone -->
+            <article class="remedy-card">
+                <div class="card-text">
+                    <h2>{% if data.astro_insights %}{{ data.astro_insights.grid_3_heading }}{% else %}Lucky Stone{% endif %}</h2>
+                    <p>{% if data.astro_insights %}{{ data.astro_insights.grid_3_content | default('Not Available') }}{% else %}Lucky stone details not available.{% endif %}</p>
+                </div>
+                <div class="card-image-container">
+                    <img src="{{REMEDY_3_IMAGE_BASE64}}" alt="Illustration for Lucky Stone" class="card-image">
+                </div>
+            </article>
+
+            <!-- Grid Item 4: Life Stone - Merged Image -->
+            <article class="remedy-card">
+                <div class="card-text">
+                    <h2>{% if data.astro_insights %}{{ data.astro_insights.grid_4_heading }}{% else %}Life Stone{% endif %}</h2>
+                    <p>{% if data.astro_insights %}{{ data.astro_insights.grid_4_content | default('Not Available') }}{% else %}Life stone details not available.{% endif %}</p>
+                </div>
+                <div class="card-image-container merged-image">
+                    <img src="{{REMEDY_4_BG_IMAGE_BASE64}}" alt="Decorative circle pattern" class="card-image-bg">
+                    <img src="{{REMEDY_4_FG_IMAGE_BASE64}}" alt="Illustration for Life Stone" class="card-image-fg">
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <footer class="page-footer">
+        <p class="author-name">{{ page_data.full_name | default('User') }}</p>
+        <p class="pagination">{{ page_data.page_number | default('7 / 20') }}</p>
+    </footer>
+</main>
+
+{% if standalone|default(true) %}
+</body>
+</html>
+{% endif %}

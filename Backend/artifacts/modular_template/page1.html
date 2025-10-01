@@ -1,0 +1,269 @@
+{% if standalone|default(true) %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page_title | default('Generated Page') }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&display=swap" rel="stylesheet">
+{% endif %}
+<link rel="stylesheet" href="page1.css">
+<style{% if standalone|default(true) %} id="sections-styles"{% endif %}>
+/* CSS for section section:main */
+.horoscope-card {
+    position: relative;
+    width: 595px;
+    height: 842px;
+    background: var(--bg-gradient);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    color: var(--color-light-blue);
+  }
+
+  .background-layers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .bg-image-1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 595px;
+    height: 843px;
+    object-fit: cover;
+  }
+
+  .bg-image-2 {
+    position: absolute;
+    top: -87px;
+    left: 722px;
+    width: 845px;
+    height: 845px;
+    opacity: 0.5;
+  }
+
+  .glow-effects {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .glow {
+    position: absolute;
+    filter: blur(80px);
+  }
+
+  .glow-1 {
+    top: 315px;
+    left: 53px;
+    width: 231px;
+    height: 231px;
+  }
+
+  .glow-2 {
+    top: 200px;
+    left: 233px;
+    width: 262px;
+    height: 262px;
+  }
+
+  .glow-3 {
+    top: 350px;
+    left: 186px;
+    width: 257px;
+    height: 257px;
+  }
+
+  .card-header,
+  .card-body,
+  .card-footer {
+    position: relative;
+    z-index: 1;
+    padding-left: 26px;
+    padding-right: 26px;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-top: 19px;
+  }
+
+  .logo {
+    width: 69px;
+    height: 69px;
+  }
+
+  .header-title {
+    text-align: right;
+    color: var(--color-light-lavender);
+    font-size: 24px;
+    line-height: 1.3;
+  }
+  
+  .header-title p {
+    margin: 0;
+  }
+
+  .title-line-2 {
+    margin-left: -34px;
+  }
+
+  .card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .ganesha-section {
+    margin-top: 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 13px;
+  }
+
+  .ganesha-img {
+    width: 108px;
+    height: 133px;
+  }
+
+  .mantra {
+    font-size: 24px;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .shlok-section {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .divider {
+    width: 186px;
+    height: 47px;
+  }
+
+  .sanskrit-text {
+    margin-top: 15px;
+    margin-bottom: 24px;
+    font-size: 20px;
+    line-height: 1.5;
+    white-space: pre-line;
+    max-width: 210px;
+  }
+
+  .english-text {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    max-width: 390px;
+  }
+
+  .divider-bottom {
+    margin-top: 15px;
+    transform: rotate(180deg);
+  }
+
+  .card-footer {
+    padding-bottom: 19px;
+    margin-top: auto;
+  }
+
+  .signature {
+    color: var(--color-light-lavender);
+    font-size: 16px;
+    line-height: 1.3;
+    margin: 0;
+    text-align: left;
+  }
+
+  @media (max-width: 620px) {
+    body {
+      padding: 0;
+    }
+    .horoscope-card {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      min-height: 100vh;
+      border-radius: 0;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+    .sanskrit-text, .english-text {
+      font-size: 18px;
+    }
+  }
+  </style>
+{% if standalone|default(true) %}
+  <script src="global.js" defer></script>
+</head>
+<body>
+{% endif %}
+<section id="horoscope">
+  <div class="horoscope-card">
+    <div class="background-layers">
+      <img src="{{BG_TEXTURE_BASE64}}" alt="Abstract background texture" class="bg-image-1">
+      <img src="{{COSMIC_BG_BASE64}}" alt="Cosmic background" class="bg-image-2">
+      <!--merged image-->
+      <div class="glow-effects">
+        <img src="{{GLOW_1_BASE64}}" alt="Glow effect" class="glow glow-1">
+        <img src="{{GLOW_2_BASE64}}" alt="Glow effect" class="glow glow-2">
+        <img src="{{GLOW_3_BASE64}}" alt="Glow effect" class="glow glow-3">
+      </div>
+    </div>
+
+    <header class="card-header">
+      <img src="{{LOGO_BASE64}}" alt="Luna Logo" class="logo">
+      <div class="header-title">
+        <p class="title-line-1">IN-DEPTH</p>
+        <p class="title-line-2">HOROSCOPE</p>
+      </div>
+    </header>
+
+    <main class="card-body">
+      <div class="ganesha-section">
+        <img src="{{GANESHA_BASE64}}" alt="Ganesha Symbol" class="ganesha-img">
+        <p class="mantra">ॐ श्री गणेशाय नमः ||</p>
+      </div>
+
+      <div class="shlok-section">
+        <img src="{{DIVIDER_BASE64}}" alt="Decorative Divider" class="divider">
+        <p class="sanskrit-text">जननी जन्म सौख्यानो
+वर्धनी कुल संपदाँ
+पदवी पूर्व पुण्यानाँ
+लिख्यते जन्म पत्रिका</p>
+        <p class="english-text">For the welfare of the mother and the child
+For the growth of the family happiness
+To follow the ancient virtuous practices
+The horoscope is written</p>
+        <img src="{{DIVIDER_BASE64}}" alt="Decorative Divider" class="divider divider-bottom">
+      </div>
+    </main>
+
+    <footer class="card-footer">
+      <p class="signature">{{ page_data.full_name | default('H. Gurumurthy') }}</p>
+    </footer>
+  </div>
+</section>
+{% if standalone|default(true) %}
+</body>
+</html>
+{% endif %}

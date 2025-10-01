@@ -1,0 +1,22 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #11001c;
+  color: #f7eaff;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+h1, h2, p {
+  margin: 0;
+}

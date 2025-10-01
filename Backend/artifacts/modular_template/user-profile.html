@@ -1,0 +1,362 @@
+{% if standalone|default(true) %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page_title | default('In-Depth Horoscope') }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Roboto:wght@400&display=swap" rel="stylesheet">
+{% endif %}
+<link rel="stylesheet" href="user-profile.css">
+<style{% if standalone|default(true) %} id="sections-styles"{% endif %}>
+/* CSS for section section:horoscope */
+.horoscope-card {
+    position: relative;
+    width: 100%;
+    max-width: 595px;
+    height: 842px;
+    background: var(--gradient-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .background-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .bg-image-main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .bg-image-deco {
+    position: absolute;
+    top: -87px;
+    left: 722px;
+    width: 845px;
+    height: 845px;
+  }
+
+  .bg-blurs {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .bg-blurs img {
+    position: absolute;
+    filter: blur(80px);
+    opacity: 0.7;
+  }
+
+  .blur-1 {
+    width: 231px;
+    height: 231px;
+    top: 315px;
+    left: 53px;
+  }
+
+  .blur-2 {
+    width: 262px;
+    height: 262px;
+    top: 199px;
+    left: 233px;
+  }
+
+  .blur-3 {
+    width: 257px;
+    height: 257px;
+    top: 350px;
+    left: 186px;
+  }
+
+  .card-body {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 28px;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .logo {
+    width: 69px;
+    height: 69px;
+    object-fit: contain;
+  }
+
+  .title-group {
+    font-family: var(--font-secondary);
+    font-size: 24px;
+    line-height: 1.3;
+    text-align: right;
+    margin: 0;
+  }
+
+  .title-group h1,
+  .title-group p {
+    margin: 0;
+    font-weight: 400;
+  }
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    margin-top: 40px;
+  }
+
+  .details-icon-wrapper {
+    position: relative;
+    width: 139px;
+    height: 139px;
+    margin-bottom: -70px;
+    z-index: 2;
+  }
+
+  .details-icon-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .icon-bg-1 { /* 6:790 */
+    top: 0;
+    left: 0;
+    width: 139px;
+    height: 139px;
+  }
+  .icon-bg-2 { /* 6:789 */
+    top: 10.5px;
+    left: 10.5px;
+    width: 118px;
+    height: 118px;
+  }
+  .icon-main { /* 6:791 */
+    top: 23px;
+    left: 23px;
+    width: 93px;
+    height: 93px;
+  }
+
+  .details-box {
+    width: 100%;
+    max-width: 481px;
+    background: var(--card-bg);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-radius: 24px;
+    padding: 88px 32px 48px;
+  }
+
+  .details-list {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  .detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .detail-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .detail-item dt,
+  .detail-item dd {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+  }
+
+  .detail-item dt {
+    text-align: left;
+  }
+
+  .detail-item dd {
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .pagination-dots {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+  }
+
+  .dot {
+    height: 8px;
+    width: 17px;
+    border-radius: 56px;
+    background: var(--gradient-accent);
+    opacity: 0.5;
+    transition: all 0.3s ease;
+  }
+
+  .dot.active {
+    width: 54px;
+    opacity: 1;
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    width: 100%;
+    padding-top: 20px;
+  }
+
+  .footer-name {
+    font-family: var(--font-secondary);
+    font-size: 16px;
+    margin: 0;
+  }
+
+  .footer-pagination {
+    font-family: var(--font-primary);
+    font-size: 16px;
+    margin: 0;
+  }
+
+  @media (max-width: 480px) {
+    body {
+      padding: 0;
+    }
+    .horoscope-card {
+      height: auto;
+      min-height: 100vh;
+      border-radius: 0;
+    }
+    .card-body {
+      padding: 20px;
+    }
+    .details-box {
+      padding: 70px 20px 30px;
+    }
+    .detail-item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+    .detail-item dd {
+      text-align: left;
+    }
+  }
+  </style>
+{% if standalone|default(true) %}
+  <script src="global.js" defer></script>
+</head>
+<body>
+{% endif %}
+<section id="horoscope">
+  <div class="horoscope-card">
+    <div class="background-elements">
+      <img src="{{BG_MAIN_BASE64}}" alt="Abstract background" class="bg-image-main">
+      <img src="{{BG_DECO_BASE64}}" alt="Decorative background element" class="bg-image-deco">
+      <!--merged image-->
+      <div class="bg-blurs">
+        <img src="{{BLUR_1_BASE64}}" alt="Blurred light effect" class="blur-1">
+        <img src="{{BLUR_2_BASE64}}" alt="Blurred light effect" class="blur-2">
+        <img src="{{BLUR_3_BASE64}}" alt="Blurred light effect" class="blur-3">
+      </div>
+    </div>
+
+    <div class="card-body">
+      <header class="card-header">
+        <img src="{{LOGO_BASE64}}" alt="Luna Logo" class="logo">
+        <div class="title-group">
+          <h1 class="title-main">IN-DEPTH</h1>
+          <p class="title-sub">HOROSCOPE</p>
+        </div>
+      </header>
+
+      <main class="card-content">
+        <!--merged image-->
+        <div class="details-icon-wrapper">
+          <img src="{{ICON_BG_1_BASE64}}" alt="Icon background layer 1" class="icon-bg-1">
+          <img src="{{ICON_BG_2_BASE64}}" alt="Icon background layer 2" class="icon-bg-2">
+          <img src="{{ICON_MAIN_BASE64}}" alt="Janma Icon" class="icon-main">
+        </div>
+
+        <div class="details-box">
+          <dl class="details-list">
+            <div class="detail-item">
+              <dt>{{ page_data.user_profile.row1.label | default('Longitude & Latitude (Deg.Mins)') }}</dt>
+              <dd>{{ page_data.user_profile.row1.value | default('79.38 East, 11.05 North') }}</dd>
+            </div>
+            <div class="detail-item">
+              <dt>{{ page_data.user_profile.row2.label | default('Ayanamsa') }}</dt>
+              <dd>{{ page_data.user_profile.row2.value | default('Chitra Paksha = 23 Deg. 33 Min. 16 Sec.') }}</dd>
+            </div>
+            <div class="detail-item">
+              <dt>{{ page_data.user_profile.row3.label | default('Birth Star - Star Pada (Quarter)') }}</dt>
+              <dd>{{ page_data.user_profile.row3.value | default('Dhanishta - 4') }}</dd>
+            </div>
+            <div class="detail-item">
+              <dt>{{ page_data.user_profile.row4.label | default('Birth Rasi - Rasi Lord') }}</dt>
+              <dd>{{ page_data.user_profile.row4.value | default('Kumbha - Sani') }}</dd>
+            </div>
+            <div class="detail-item">
+              <dt>{{ page_data.user_profile.row5.label | default('Lagna (Ascendant) - Lagna Lord)') }}</dt>
+              <dd>{{ page_data.user_profile.row5.value | default('Simha - Surya') }}</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="pagination-dots">
+          <div class="dot"></div>
+          <div class="dot active"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+      </main>
+
+      <footer class="card-footer">
+        <p class="footer-name">{{ page_data.full_name | default('H. Gurumurthy') }}</p>
+        <p class="footer-pagination">{{ page_data.page_number | default('1 / 20') }}</p>
+      </footer>
+    </div>
+  </div>
+</section>
+{% if standalone|default(true) %}
+</body>
+</html>
+{% endif %}

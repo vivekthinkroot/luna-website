@@ -1,0 +1,346 @@
+{% if standalone|default(true) %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page_title | default('Charts - In-Depth Horoscope') }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Roboto:wght@400&display=swap" rel="stylesheet">
+{% endif %}
+<link rel="stylesheet" href="user-profile.css">
+<style{% if standalone|default(true) %} id="sections-styles"{% endif %}>
+/* CSS for chart pages */
+.horoscope-card {
+    position: relative;
+    width: 100%;
+    max-width: 595px;
+    height: 1000px;
+    background: var(--gradient-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.background-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.bg-image-main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.bg-image-deco {
+    position: absolute;
+    top: -87px;
+    left: 722px;
+    width: 845px;
+    height: 845px;
+}
+
+.bg-blurs {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.bg-blurs img {
+    position: absolute;
+    filter: blur(80px);
+    opacity: 0.7;
+}
+
+.blur-1 {
+    width: 231px;
+    height: 231px;
+    top: 315px;
+    left: 53px;
+}
+
+.blur-2 {
+    width: 262px;
+    height: 262px;
+    top: 199px;
+    left: 233px;
+}
+
+.blur-3 {
+    width: 257px;
+    height: 257px;
+    top: 350px;
+    left: 186px;
+}
+
+.card-body {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 20px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.logo {
+    width: 69px;
+    height: 69px;
+    object-fit: contain;
+}
+
+.title-group {
+    font-family: var(--font-secondary);
+    font-size: 24px;
+    line-height: 1.3;
+    text-align: right;
+    margin: 0;
+    color: #f7eaff;
+}
+
+.title-group h1,
+.title-group p {
+    margin: 0;
+    font-weight: 400;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    margin-top: 20px;
+}
+
+.chart-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.chart-wrapper {
+    background: rgba(115, 69, 172, 0.2);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-radius: 16px;
+    padding: 20px;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chart-display {
+    width: 450px;
+    height: 450px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px auto;
+    background: transparent;
+    overflow: visible;
+}
+
+.chart-display svg {
+    width: 100%;
+    height: 100%;
+    max-width: 450px;
+    max-height: 450px;
+    object-fit: contain;
+}
+
+.chart-display svg text, 
+.chart-display svg tspan { 
+    fill: #ad80fe !important; 
+}
+
+.chart-display svg path, 
+.chart-display svg line, 
+.chart-display svg rect, 
+.chart-display svg circle, 
+.chart-display svg polygon { 
+    stroke: #ad80fe !important; 
+    fill: transparent !important; 
+}
+
+.chart-display img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.chart-placeholder {
+    width: 100%;
+    height: 100%;
+    background: rgba(115, 69, 171, 0.20);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #f7eaff;
+}
+
+.chart-description {
+    background: rgba(115, 69, 171, 0.20);
+    border-radius: 10px;
+    padding: 12px;
+    width: 100%;
+    text-align: center;
+}
+
+.chart-description p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    color: #f7eaff;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    width: 100%;
+    padding-top: 20px;
+}
+
+.footer-name {
+    font-family: var(--font-secondary);
+    font-size: 16px;
+    margin: 0;
+    color: #f7eaff;
+}
+
+.footer-pagination {
+    font-family: var(--font-primary);
+    font-size: 16px;
+    margin: 0;
+    color: #f7eaff;
+}
+
+@media (max-width: 768px) {
+    .horoscope-card {
+        height: auto;
+        min-height: 100vh;
+    }
+    .chart-display {
+        width: 350px;
+        height: 350px;
+    }
+    .chart-wrapper {
+        max-width: 95%;
+    }
+}
+
+@media (max-width: 480px) {
+    .horoscope-card {
+        height: auto;
+        min-height: 100vh;
+        border-radius: 0;
+    }
+    .card-body {
+        padding: 15px;
+    }
+    .chart-display {
+        width: 280px;
+        height: 280px;
+    }
+    .chart-wrapper {
+        padding: 15px;
+        max-width: 95%;
+    }
+}
+</style>
+{% if standalone|default(true) %}
+  <script src="global.js" defer></script>
+</head>
+<body>
+{% endif %}
+
+<!-- Parameterized Chart Section -->
+<section id="horoscope">
+  <div class="horoscope-card">
+    <div class="background-elements">
+      <img src="{{BG_MAIN_BASE64}}" alt="Abstract background" class="bg-image-main">
+      <img src="{{BG_DECO_BASE64}}" alt="Decorative background element" class="bg-image-deco">
+      <div class="bg-blurs">
+        <img src="{{BLUR_1_BASE64}}" alt="Blurred light effect" class="blur-1">
+        <img src="{{BLUR_2_BASE64}}" alt="Blurred light effect" class="blur-2">
+        <img src="{{BLUR_3_BASE64}}" alt="Blurred light effect" class="blur-3">
+      </div>
+    </div>
+
+    <div class="card-body">
+      <header class="card-header">
+        <img src="{{LOGO_BASE64}}" alt="Luna Logo" class="logo">
+        <div class="title-group">
+          <h1 class="title-main">{{ title_main | default('CHART') }}</h1>
+          <p class="title-sub">{{ title_sub | default('ASTROLOGICAL CHART') }}</p>
+        </div>
+      </header>
+
+      <main class="card-content">
+        <div class="chart-container">
+          <div class="chart-wrapper">
+            <div class="chart-display">
+              {% if chart_image and (chart_image.svg or chart_image.base64_image) %}
+                {% if chart_image.svg %}
+                  {{ chart_image.svg|safe }}
+                {% elif chart_image.base64_image %}
+                  <img src="data:image/png;base64,{{ chart_image.base64_image }}" alt="{{ title_main }} Chart">
+                {% endif %}
+              {% else %}
+                <div class="chart-placeholder">
+                  <span style="color: #f7eaff; font-family: 'Roboto', sans-serif; font-size: 12px;">{{ no_chart_title | default('Chart Not Available') }}</span>
+                </div>
+              {% endif %}
+            </div>
+            
+            {% if chart_description %}
+            <div class="chart-description">
+              <p>{{ chart_description | safe }}</p>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </main>
+
+      <footer class="card-footer">
+        <p class="footer-name">{{ page_data.full_name | default('User') }}</p>
+        <p class="footer-pagination">{{ page_data.page_number | default('5 / 20') }}</p>
+      </footer>
+    </div>
+  </div>
+</section>
+
+{% if standalone|default(true) %}
+</body>
+</html>
+{% endif %}
