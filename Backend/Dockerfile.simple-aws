@@ -1,0 +1,66 @@
+# Simple AWS deployment Dockerfile
+FROM ubuntu:22.04
+
+# Set working directory
+WORKDIR /app
+
+# Prevent interactive prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install Python and system dependencies
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-venv \
+    python3-dev \
+    gcc \
+    g++ \
+    libpq-dev \
+    curl \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create symlink for python command
+RUN ln -s /usr/bin/python3 /usr/bin/python
+
+# Copy requirements and install Python packages
+COPY requirements.txt .
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY api/ ./api/
+COPY artifacts/ ./artifacts/
+COPY channels/ ./channels/
+COPY config/ ./config/
+COPY dao/ ./dao/
+COPY data/ ./data/
+COPY kundli/ ./kundli/
+COPY llms/ ./llms/
+COPY notifications/ ./notifications/
+COPY payments/ ./payments/
+COPY predictions/ ./predictions/
+COPY qna/ ./qna/
+COPY services/ ./services/
+COPY utils/ ./utils/
+COPY *.py ./
+COPY *.sql ./
+COPY *.json ./
+
+# Create logs directory
+RUN mkdir -p logs
+
+# Create non-root user for security
+RUN useradd --create-home --shell /bin/bash app && \
+    chown -R app:app /app
+USER app
+
+# Expose port 8000
+EXPOSE 8000
+
+# Health check endpoint
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
+
+# Run the application
+CMD ["python3", "server.py"]
+
