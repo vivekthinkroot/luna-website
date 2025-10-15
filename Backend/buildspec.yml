@@ -15,4 +15,4 @@ phases:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.eu-north-1.amazonaws.com/luna-backend:latest
+      - docker push 799289032419.dkr.ecr.eu-north-1.amazonaws.com/luna-backend:latest
