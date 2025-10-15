@@ -1,0 +1,18 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 799289032419.dkr.ecr.eu-north-1.amazonaws.com
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build -t luna-backend ./Backend
+      - docker tag luna-backend:latest 799289032419.dkr.ecr.eu-north-1.amazonaws.com/luna-backend:latest
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push 799289032419.dkr.ecr.eu-north-1.amazonaws.com/luna-backend:latest
