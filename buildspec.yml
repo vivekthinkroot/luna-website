@@ -9,10 +9,13 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t luna-backend ./Backend
+      - docker build -f Dockerfile.simple-aws -t luna-backend .
       - docker tag luna-backend:latest 799289032419.dkr.ecr.eu-north-1.amazonaws.com/luna-backend:latest
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push 799289032419.dkr.ecr.eu-north-1.amazonaws.com/luna-backend:latest
+artifacts:
+  files:
+    - '**/*'
